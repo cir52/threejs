@@ -17,12 +17,16 @@ const CameraRig = ({ children }) => {
 
       // set the initial position of the model
       let targetPosition = [-0.4, 0, 2];
+      let targetRotation = 0;
 
       if (snap.intro) {
+         targetRotation = 50;
+
          if (isBreakpoint) targetPosition = [0, 0, 2];
-         if (isMobile) targetPosition = [0, 0.2, 2.5];
+         if (isMobile) targetPosition = [-0.2, 0, 2.5];
       }
       else {
+         targetRotation = 0;
          if (isMobile) targetPosition = [0, 0, 2.5];
          else targetPosition = [0, 0, 2];
       }
@@ -37,7 +41,7 @@ const CameraRig = ({ children }) => {
       // set the model rotation smoothly
       easing.dampE(
          group.current.rotation,
-         [state.pointer.y / 10, state.pointer.x / 5, 0],
+         [state.pointer.y / -5, (state.pointer.x / 2 ) + targetRotation, 0],
          0.25,
          delta
       )

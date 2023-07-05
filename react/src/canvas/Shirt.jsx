@@ -18,43 +18,49 @@ const Shirt = () => {
 
    const stateString = JSON.stringify(snap);
 
-  return (
-    <group
-      key={stateString}
-    >
-       <mesh
-         castShadow 
-         geometry={nodes.T_Shirt_male.geometry}
-         material={materials.lambert1}
-         material-roughness={1}
-         dispose={null}
+   return (
+      <group
+         key={stateString}
       >
-         {snap.isFullTexture && (
-            <Decal 
-               position={[0, 0, 0]}
-               rotation={[0, 0, 0]}
-               scale={1}
-               map={fullTexture}
-            />            
-         )}
+         <mesh
+            castShadow
+            geometry={nodes.T_Shirt_male.geometry}
+            material={materials.lambert1}
+            material-roughness={1}
+            dispose={null}
+         >
+            {snap.isFullTexture && (
+               <Decal
+                  position={[0, 0, 0]}
+                  rotation={[0, 0, 0]}
+                  scale={1}
+                  map={fullTexture}
+                  polygonOffset
+                  polygonOffsetFactor={0}
+               >
+                  <meshBasicMaterial 
+                     map={fullTexture} 
+                     transparent = {true}
+                  />
+               </Decal>
+            )}
 
-         {snap.isLogoTexture && (
-            <Decal 
-               position={[0, 0.04, 0.15]}
-               rotation={[0, 0, 0]}
-               scale={0.15}
-               map={logoTexture}
-               anisotropy={16}
-               depthTest={false}
-               depthWrite={true}
+            {snap.isLogoTexture && (
+               <Decal
+                  position={[0, 0.04, 0.15]}
+                  rotation={[0, 0, 0]}
+                  scale={0.15}
+                  map={logoTexture}
+                  anisotropy={16}
+                  depthTest={false}
+                  depthWrite={true}
+               />
+            )}
 
-            />            
-         )}
+         </mesh>
 
-      </mesh>
-
-    </group>
-  )
+      </group>
+   )
 }
 
 export default Shirt

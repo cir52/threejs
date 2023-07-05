@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
 
@@ -19,32 +19,68 @@ const Customizer = () => {
    const [prompt, setPrompt] = useState('')
    const [generatingImg, setGeneratingImg] = useState(false)
 
-   const [activeEditorTab, setActiveEditorTab] = useState(false)
+   const [activeEditorTab, setActiveEditorTab] = useState('')
    const [activeFilterTab, setActiveFilterTab] = useState({
       logoShirt: true,
       stylishShirt: false,
    })
+
+   // close on outside click
+
+   const node = useRef();  // Reference to the node we're listening for outside clicks on
+
+   const handleClickOutside = e => {
+      if (node.current.contains(e.target)) {
+        // inside click
+        return;
+      }
+      // outside click
+      setActiveEditorTab('');;
+   };
+
+   useEffect(() => {
+      if (activeEditorTab !== '') {
+         document.addEventListener("mousedown", handleClickOutside);
+      } else {
+         document.removeEventListener("mousedown", handleClickOutside);
+      }
+
+      return () => {
+         document.removeEventListener("mousedown", handleClickOutside);
+      };
+   }, [activeEditorTab]);
 
    // show tab content depending on the active Tab
 
    const generateTabContent = () => {
       switch (activeEditorTab) {
          case 'colorpicker':
-            return <ColorPicker />
+            return   <div className='absolute left-full ml-3'
+                        ref={node}
+                     >
+                        <ColorPicker />
+                   </div>
          case 'filepicker':
-            return <FilePicker 
-               file={file}
-               setFile={setFile}
-               readFile={readFile}
-               />
+            return   <div className='filepicker-container'
+                        ref={node}
+                     >
+                     <FilePicker 
+                        file={file}
+                        setFile={setFile}
+                        readFile={readFile}
+                     />
+                  </div>
          case 'aipicker':
-            return <AIPicker 
-               prompt={prompt}
-               setPrompt={setPrompt}
-               generatingImg={generatingImg}
-               handleSubmit={handleSubmit}
-
-            />         
+            return   <div className = 'aipicker-container'
+                        ref={node}
+                     >
+                     <AIPicker 
+                        prompt={prompt}
+                        setPrompt={setPrompt}
+                        generatingImg={generatingImg}
+                        handleSubmit={handleSubmit}
+                     /> 
+                     </div>        
          default:
             return null;
       }
@@ -55,6 +91,22 @@ const Customizer = () => {
 
       try {
          // call our backend to generate an ai image!
+         setGeneratingImg(true);
+
+         const response = await fetch('http://localhost:8080/api/v1/dalle', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+               prompt,
+            })
+         })
+
+         const data = await response.json();
+
+         handleDecals(type, `data:image/png;base64,${data.photo}`);
+
       }
       catch (error) {
          alert(error)
@@ -86,6 +138,7 @@ const Customizer = () => {
          default:
             state.isLogoTexture = true;
             state.isFullTexture = false;
+         break;
       }
       setActiveFilterTab((prevState) => {
          return {
@@ -109,7 +162,7 @@ const Customizer = () => {
          <>
            <motion.div
                key='custom'
-               className = 'absolute top-0 left-0 z-10'
+               className = 'absolute top-0 left-0 z-20'
                {...slideAnimation('left')}
            >
                <div className='flex items-center min-h-screen'>

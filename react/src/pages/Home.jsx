@@ -20,19 +20,23 @@ const Home = () => {
 
       <AnimatePresence>
          {snap.intro && (
-            <motion.section className="home" {...slideAnimation('left')}>
-               <motion.header {...slideAnimation('down')}>
-                  <img
-                     src='./threejs.png'
-                     alt='logo'
-                     className='w-8 h-8 object-contain'
-                  />
-               </motion.header>
+            <motion.section className="home min-h-screen" {...slideAnimation('left')}>
 
-               <motion.div className='home-content' {...headContainerAnimation}>
+               {/* <motion.header 
+                  className='mt-5'
+                  {...slideAnimation('down')}
+               >
+                  <img
+                     src='./icon.png'
+                     alt='logo'
+                     className='w-12 h-12 object-contain'
+                  />
+               </motion.header> */}
+
+               <motion.div className='home-content z-20' {...headContainerAnimation}>
                   <motion.div {...headTextAnimation}>
-                     <h1 className='head-text'>
-                        LET'S <br className='xl:block hidden' />
+                     <h1 className='head-text' style={{color: snap.color}}>
+                        STYLE <br className='xl:block hidden' />
                      </h1>
                   </motion.div>
 
@@ -40,8 +44,8 @@ const Home = () => {
                      {...headContentAnimation}
                      className='flex flex-col gap-5'
                   >
-                     <p className="max-w-md font-normal text-gray-600 text-base">
-                        Create your unique and exclusive shirt with our brand new 3D customization tool. <strong>Unleash your imagination</strong>{" "}and define your own style.
+                     <p className="max-w-xs font-normal text-gray-600 text-base">
+                        your own unique shirt with this brand new 3D customization tool. <strong>Unleash your imagination</strong>{" "}or use AI to define your own style.
                      </p>
                      <CustomButton
                         type='filled'
@@ -51,6 +55,7 @@ const Home = () => {
                      />
                   </motion.div>
                </motion.div>
+   
             </motion.section>
          )}
       </AnimatePresence>

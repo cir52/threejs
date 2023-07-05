@@ -6,9 +6,10 @@ import CustomButton from './CustomButton'
 
 const FilePicker = ({ file, setFile, readFile }) => {
   return (
-    <div className = 'filepicker-container'>
+    <>
       <div className = 'flex-1 flex flex-col'>
         <input 
+          className='max-w-[90%]'
           id = 'file-upload'
           type = 'file'
           accept = 'image'
@@ -36,7 +37,7 @@ const FilePicker = ({ file, setFile, readFile }) => {
           customStyles='text-xs'
         />
       </div>
-    </div>
+    </>
   )
 }
 
