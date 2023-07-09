@@ -1,5 +1,5 @@
 import React from 'react'
-
+import BarLoader from "react-spinners/PacmanLoader";
 import CustomButton from './CustomButton';
 
 const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
@@ -14,11 +14,17 @@ const AIPicker = ({ prompt, setPrompt, generatingImg, handleSubmit }) => {
       />
       <div className='flex flex-wrap gap-3'>
         {generatingImg ? (
-          <CustomButton
-            type='outline'
-            title='Asking AI...'
-            customStyles='text-xs'
-          /> 
+          <>
+            <BarLoader 
+              color="#36d7b7" 
+              size={15}
+            />
+            <CustomButton
+              type='outline'
+              title='Asking AI...'
+              customStyles='text-xs'
+            />
+          </> 
           ) :
           (
             <>

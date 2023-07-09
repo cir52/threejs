@@ -11,31 +11,18 @@ import {
 } from '../config/motion';
 import { CustomButton } from '../components';
 
-
 const Home = () => {
 
    const snap = useSnapshot(state);
 
    return (
-
       <AnimatePresence>
          {snap.intro && (
             <motion.section className="home min-h-screen" {...slideAnimation('left')}>
 
-               {/* <motion.header 
-                  className='mt-5'
-                  {...slideAnimation('down')}
-               >
-                  <img
-                     src='./icon.png'
-                     alt='logo'
-                     className='w-12 h-12 object-contain'
-                  />
-               </motion.header> */}
-
                <motion.div className='home-content z-20' {...headContainerAnimation}>
                   <motion.div {...headTextAnimation}>
-                     <h1 className='head-text' style={{color: snap.color}}>
+                     <h1 className='head-text' style={{ color: snap.color }}>
                         STYLE <br className='xl:block hidden' />
                      </h1>
                   </motion.div>
@@ -55,7 +42,6 @@ const Home = () => {
                      />
                   </motion.div>
                </motion.div>
-   
             </motion.section>
          )}
       </AnimatePresence>

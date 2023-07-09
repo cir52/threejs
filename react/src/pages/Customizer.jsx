@@ -2,10 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
 
-import config from '../config/config';
 import state from '../store';
-import { download } from '../assets';
-import { downloadCanvasToImage, reader } from '../config/helpers';
+import { reader } from '../config/helpers';
+
 import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 
@@ -35,7 +34,7 @@ const Customizer = () => {
         return;
       }
       // outside click
-      setActiveEditorTab('');;
+      setActiveEditorTab('');
    };
 
    useEffect(() => {
@@ -118,8 +117,8 @@ const Customizer = () => {
    }
 
    const handleDecals = (type, result) => {
-      const decalType = DecalTypes[type];
 
+      const decalType = DecalTypes[type];
       state[decalType.stateProperty] = result;
 
       if (!activeFilterTab[decalType.filterTab]) {

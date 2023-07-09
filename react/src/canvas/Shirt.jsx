@@ -1,18 +1,19 @@
 import React from 'react'
 import { easing } from 'maath';
 import { useSnapshot } from 'valtio';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useLoader } from '@react-three/fiber';
 import { Decal, useGLTF, useTexture } from '@react-three/drei';
 
 import state from '../store';
+import { TextureLoader } from 'three';
 
 const Shirt = () => {
 
    const snap = useSnapshot(state);
    const { nodes, materials } = useGLTF('/shirt_baked.glb');
 
-   const logoTexture = useTexture(snap.logoDecal);
-   const fullTexture = useTexture(snap.fullDecal);
+   const logoTexture = useLoader(TextureLoader, snap.logoDecal);
+   const fullTexture = useLoader(TextureLoader, snap.fullDecal);
 
    useFrame((state, delta) => easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
 
@@ -35,8 +36,7 @@ const Shirt = () => {
                   rotation={[0, 0, 0]}
                   scale={1}
                   map={fullTexture}
-                  polygonOffset
-                  polygonOffsetFactor={0}
+
                >
                   <meshBasicMaterial 
                      map={fullTexture} 
