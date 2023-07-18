@@ -21,9 +21,9 @@ const Shirt = () => {
 
    return (
       <group
-         key={stateString}
-      >
-         <mesh
+         key={stateString}         
+      > 
+          <mesh
             castShadow
             geometry={nodes.T_Shirt_male.geometry}
             material={materials.lambert1}
