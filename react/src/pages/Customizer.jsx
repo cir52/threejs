@@ -166,8 +166,9 @@ const Customizer = () => {
            >
                <div className='flex items-center min-h-screen'>
                   <div className='editortabs-container tabs'>
-                     {EditorTabs.map((tab) =>
+                     {EditorTabs.map((tab, idx) =>
                         <Tab
+                           idx={idx}
                            key={tab.name}
                            tab={tab}
                            handleClick={() => setActiveEditorTab(tab.name)}
